@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hirado-machicon-lp.vercel.app/sitemap.xml
