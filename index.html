@@ -207,7 +207,7 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
       <div class="rain">※荒天時は 9/19(土) に延期</div>
     </div>
 
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary btn-lg">今すぐ申し込む（先着順）</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary btn-lg" data-loc="hero_ヒーロー">今すぐ申し込む（先着順）</a>
     <p class="note">受付期間：2026年6月22日(月)〜8月30日(日)・定員になり次第締切</p>
   </div>
 </section>
@@ -351,7 +351,7 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
       <b>振込先</b>：十八親和銀行 平戸支店／普通 1313538<br>
       口座名義：平戸商工会議所青年部（ヒラドショウコウカイギショセイネンブ）
     </div>
-    <div style="text-align:center;margin-top:26px"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary btn-lg" style="display:inline-flex">申込フォームへ進む</a></div>
+    <div style="text-align:center;margin-top:26px"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary btn-lg" data-loc="steps_申込ステップ" style="display:inline-flex">申込フォームへ進む</a></div>
   </div>
 </section>
 
@@ -393,7 +393,7 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
   <div class="wrap">
     <h2>平戸で、いい出会いを。</h2>
     <p>男女各50名・先着順。定員になり次第締め切ります。</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-lg">今すぐ申し込む</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-lg" data-loc="final_最終CTA">今すぐ申し込む</a>
     <br>
     <a href="https://www.instagram.com/hirado_yeg/" class="ig" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
@@ -416,7 +416,7 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
 
 <!-- fixed bar -->
 <div class="fixbar">
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary">お申し込みはこちら（先着順）</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzeQ6LWr-tmAzu7uYJG6RB-y2EcdCo2JhKlvCJWuyggmB62w/viewform?utm_source=lp&utm_medium=referral&utm_campaign=hirado_machicon2026" class="btn btn-primary" data-loc="fixbar_下部固定バー">お申し込みはこちら（先着順）</a>
 </div>
 
 <!-- 申込ボタン → GoogleフォームへのクリックをGA4イベントとして送信。LP経由の申込導線を計測できます -->
@@ -425,10 +425,18 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
     a.addEventListener('click', function(){
       if (typeof gtag === 'function') {
         gtag('event', 'apply_click', {
-          event_category: 'engagement',
-          event_label: a.textContent.trim().slice(0, 40),
+          button_location: a.dataset.loc || 'unknown',
+          button_text: a.textContent.trim().slice(0, 40),
           transport_type: 'beacon'
         });
+      }
+    });
+  });
+  // Instagramリンクのクリックも識別できるよう別イベントで送信
+  document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (typeof gtag === 'function') {
+        gtag('event', 'sns_click', { sns: 'instagram', transport_type: 'beacon' });
       }
     });
   });
