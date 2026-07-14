@@ -82,7 +82,7 @@
     {"@type": "Question", "name": "一人で参加しても大丈夫ですか？", "acceptedAnswer": {"@type": "Answer", "text": "はい、独身の方の単独参加を歓迎しています。同性のお友達（1組3名以内）とのご参加もできます。"}},
     {"@type": "Question", "name": "どのお店に行けますか？", "acceptedAnswer": {"@type": "Answer", "text": "当日は参加店舗の中から2店舗を回遊します。回遊する2店舗は主催側でランダムに振り分けます。各店は時間内、ビュッフェ形式（食べ・飲み放題）です。"}},
     {"@type": "Question", "name": "既婚者の同伴とは？", "acceptedAnswer": {"@type": "Answer", "text": "未婚の方に同伴する形でのみ、既婚者も1組につき1名まで参加できます。既婚者のみでの参加はできません。"}},
-    {"@type": "Question", "name": "申込の資格・年齢は？", "acceptedAnswer": {"@type": "Answer", "text": "20歳以上の独身者が対象です。お申込みは同性1組3名以内、または独身者の単独参加となります。"}},
+    {"@type": "Question", "name": "申込の資格・年齢は？", "acceptedAnswer": {"@type": "Answer", "text": "20歳以上の独身者が対象です。お申込みは同性1組3名以内、または独身者の単独参加となります。未婚者との同伴に限り、既婚者も1組1名まで参加できます。"}},
     {"@type": "Question", "name": "参加費はいくらですか？", "acceptedAnswer": {"@type": "Answer", "text": "女性6,000円・男性8,000円です。2店舗の回遊ビュッフェと特設会場のパーティ、飲食代込みの価格です。"}}
   ]
 }
@@ -254,7 +254,35 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
 
 /* fixed bar */
 .fixbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;display:flex;justify-content:center}
-.fixbar .btn{width:100%;max-width:340px;padding:14px;font-size:15.5px}
+.fixbar .btn{width:100%;max-width:340px;padding:14px;font-size:15.5px;will-change:transform;animation:ctaAttention 4.8s ease-in-out infinite}
+/* CTAボタンのアテンション（数秒に1回、軽くパルス＋発光） */
+@keyframes ctaAttention{
+  0%,68%,100%{transform:scale(1);box-shadow:0 4px 14px rgba(236,42,123,.4)}
+  78%{transform:scale(1.045);box-shadow:0 10px 28px rgba(236,42,123,.6)}
+  88%{transform:scale(1);box-shadow:0 4px 14px rgba(236,42,123,.4)}
+}
+
+/* スクロールで要素がふわっと出る演出（GPU合成で軽量） */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.75,.2,1);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:none}
+
+/* ヒーローの初期ロード演出（子要素を少しずつフェードアップ） */
+.hero-in>*{opacity:0;transform:translateY(16px);animation:heroUp .75s cubic-bezier(.2,.75,.2,1) forwards}
+.hero-in>*:nth-child(1){animation-delay:.10s}
+.hero-in>*:nth-child(2){animation-delay:.20s}
+.hero-in>*:nth-child(3){animation-delay:.30s}
+.hero-in>*:nth-child(4){animation-delay:.40s}
+.hero-in>*:nth-child(5){animation-delay:.50s}
+.hero-in>*:nth-child(6){animation-delay:.60s}
+.hero-in>*:nth-child(7){animation-delay:.70s}
+.hero-in>*:nth-child(8){animation-delay:.80s}
+@keyframes heroUp{to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion: reduce){
+  .fixbar .btn{animation:none}
+  .reveal,.reveal.in{opacity:1;transform:none;transition:none}
+  .hero-in>*{opacity:1;transform:none;animation:none}
+}
 
 @media(max-width:380px){
   .shops{grid-template-columns:1fr}
@@ -445,7 +473,7 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
       <details class="qa"><summary>一人で参加しても大丈夫ですか？</summary><div class="a">はい、独身の方の単独参加を歓迎しています。もちろん同性のお友達（1組3名以内）とのご参加もOKです。</div></details>
       <details class="qa"><summary>どのお店に行けますか？</summary><div class="a">当日は参加店舗の中から2店舗を回遊します。回遊する2店舗は主催側でランダムに振り分けさせていただきます。各店は時間内、ビュッフェ形式（食べ・飲み放題）です。</div></details>
       <details class="qa"><summary>既婚者の同伴とは？</summary><div class="a">未婚の方に同伴する形でのみ、既婚者も1組につき1名まで参加できます。既婚者のみでのご参加はできません。</div></details>
-      <details class="qa"><summary>申込の資格・年齢は？</summary><div class="a">20歳以上の独身者が対象です。お申込みは同性1組3名以内、または独身者の単独参加となります。</div></details>
+      <details class="qa"><summary>申込の資格・年齢は？</summary><div class="a">20歳以上の独身者が対象です。お申込みは同性1組3名以内、または独身者の単独参加となります。未婚者との同伴に限り、既婚者も1組1名まで参加できます。</div></details>
       <details class="qa"><summary>キャンセルはできますか？</summary><div class="a">お振込後のキャンセルは返金できません。ただし、荒天により9/19へ延期となり参加できない場合は、振込手数料を差し引いて返金いたします。</div></details>
       <details class="qa"><summary>雨が降ったら？</summary><div class="a">荒天時は9/19(土)に延期します。18:00からの特設会場パーティは屋外のため小雨決行・荒天時は中止となり、参加店舗で使える1,000円分のチケットをお渡しします（参加費の返金はありません）。</div></details>
       <details class="qa"><summary>支払い方法は？</summary><div class="a">申込後5日以内に、指定口座（十八親和銀行 平戸支店）へお振込みください。振込手数料は参加者のご負担となります。</div></details>
@@ -519,6 +547,26 @@ footer .fnote{margin-top:14px;font-size:11px;opacity:.55}
       }
     });
   });
+</script>
+
+<!-- スクロールで要素がふわっと出る演出（IntersectionObserver・軽量／JSなしでも内容は表示される） -->
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('.sec-head, .point, .check, .tl, .shop, .venue, .price, .step, .bank, .qa, .cautions li');
+  els.forEach(function(el){
+    el.classList.add('reveal');
+    var i = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+    el.style.transitionDelay = Math.min(i, 6) * 0.06 + 's'; // 同グループ内で少しずつ遅延（スタッガー）
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
 </script>
 
 </body>
